@@ -1,31 +1,17 @@
-import Head from "next/head";
-import Image from "next/image";
-import { Geist, Geist_Mono } from "next/font/google";
-import styles from "@/styles/Home.module.css";
-
 import C from '@/stores/C'
 import React, { useEffect } from 'react';
 
 
 const classNames = ['A', 'B']
     .map(n => import(`@/stores/${n}`)
-        .then(m => {
-            debugger;
-            console.log(m.default);
-            return m.default
-        })
+    .then(m => m.default)
 );
 
 export default function test() {
     const [classes, setClasses] = React.useState<string|null>(null);
 
     useEffect(() => {
-        console.log(classNames, classNames.length);
-
-        debugger
-        (Promise.all(classNames))
-        .then(m => {
-            debugger;
+        (Promise.all(classNames)).then(m => {
             setClasses(m.map(m => m.toString()).join('\n'))
         })
     },[]);
